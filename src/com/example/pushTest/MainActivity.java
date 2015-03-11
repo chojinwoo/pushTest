@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
                 PhoneNumber = PhoneNumber.substring(PhoneNumber.length()-10,PhoneNumber.length());
                 PhoneNumber="0"+PhoneNumber;
                 String postData = "regId="+msg+"&phoneNum="+PhoneNumber;
-                webView.postUrl("http://simpletalks.herokuapp.com/mobile", EncodingUtils.getBytes(postData, "BASE64"));
+                webView.postUrl("https://simpletalks.herokuapp.com/mobile", EncodingUtils.getBytes(postData, "BASE64"));
             }
         }.execute(null, null, null);
     }
