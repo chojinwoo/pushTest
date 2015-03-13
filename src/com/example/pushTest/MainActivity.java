@@ -19,6 +19,7 @@ import java.io.IOException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.telephony.TelephonyManager;
 import android.view.Window;
 import android.view.WindowManager;
@@ -77,6 +78,17 @@ public class MainActivity extends Activity {
             };
         });
         getRegId();
+    }
+
+    /*
+ * 화면 회전시 화면이 초기화되버리는 문제 방지
+ * 매니페스트 액티비티 속성에
+ * android:configChanges="orientation|screenSize"
+ * 추가 필요
+ */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
     }
 
     public static void unlockScreen() {

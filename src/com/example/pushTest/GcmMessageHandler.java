@@ -74,6 +74,8 @@ public class GcmMessageHandler extends IntentService {
 
         mes = extras.getString("title");
         showNotification();
+        showToast();
+        unlockScreen();
 //        Log.i("GCM", "Received : (" + messageType + ")  " + extras.getString("title"));
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -84,7 +86,6 @@ public class GcmMessageHandler extends IntentService {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                Log.e("getmessage", "getmessage:" + mes);
                 generateNotification(getApplicationContext(), mes);
                 unlockScreen();
             }
