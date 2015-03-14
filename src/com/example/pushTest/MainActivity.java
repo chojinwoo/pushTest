@@ -21,12 +21,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.telephony.TelephonyManager;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -91,17 +93,6 @@ public class MainActivity extends Activity {
         super.onConfigurationChanged(newConfig);
     }
 
-    public static void unlockScreen() {
-        Window window = mainWindow;
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD//잠금 화면 위에 뜨게하기.
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON// 켜진 화면 유지 면안꺼지게하
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);// 화면 깨우기.
-
-    }
-
     public void getRegId(){
 
         new AsyncTask<Void, Void, String>() {
@@ -133,7 +124,7 @@ public class MainActivity extends Activity {
                 PhoneNumber = PhoneNumber.substring(PhoneNumber.length()-10,PhoneNumber.length());
                 PhoneNumber="0"+PhoneNumber;
                 String postData = "regId="+msg+"&phoneNum="+PhoneNumber;
-                webView.postUrl("https://simpletalks.herokuapp.com/mobile", EncodingUtils.getBytes(postData, "BASE64"));
+                webView.postUrl("http://172.20.10.2:8080/mobile", EncodingUtils.getBytes(postData, "BASE64"));
             }
         }.execute(null, null, null);
     }

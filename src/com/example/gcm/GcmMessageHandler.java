@@ -1,17 +1,17 @@
-package com.example.pushTest;
+package com.example.gcm;
 
 import android.app.*;
-import android.content.ContextWrapper;
 import android.net.Uri;
-import android.view.WindowManager;
+import android.view.*;
+import android.widget.TextView;
+import com.example.pushTest.MainActivity;
+import com.example.pushTest.R;
+import com.example.wakeLock.WakeUpScreen;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -24,12 +24,12 @@ import android.app.IntentService;
 import android.os.Handler;
 import android.widget.Toast;
 
-import static com.example.pushTest.MainActivity.unlockScreen;
 
 public class GcmMessageHandler extends IntentService {
 
 
     String mes;
+    String title;
     private Handler handler;
     public GcmMessageHandler() {
         super("GcmMessageHandler");
@@ -72,10 +72,11 @@ public class GcmMessageHandler extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        mes = extras.getString("title");
+        title = extras.getString("title");
+        mes = extras.getString("message");
+
         showNotification();
-        showToast();
-        unlockScreen();
+
 //        Log.i("GCM", "Received : (" + messageType + ")  " + extras.getString("title"));
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -86,19 +87,14 @@ public class GcmMessageHandler extends IntentService {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                generateNotification(getApplicationContext(), mes);
-                unlockScreen();
+                WakeUpScreen.acquire(getApplicationContext());
+                generateNotification(getApplicationContext(), title + " : " + mes);
+                Toast toast = Toast.makeText(getApplicationContext(), title + " : " + mes, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 220);
+                toast.show();
             }
         });
     }
 
-    public void showToast() {
-        handler.post(new Runnable() {
-            public void run() {
 
-                Toast.makeText(getApplicationContext(), mes, Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
 }

@@ -13,14 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.pushTest;
-
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.WakefulBroadcastReceiver;
-
+package com.example.gcm;
 
 import android.app.Activity;
 import android.content.ComponentName;
